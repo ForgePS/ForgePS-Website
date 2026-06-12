@@ -16,7 +16,7 @@ After setup, your workflow is:
 ### 1. Put the project on GitHub
 
 ```powershell
-cd C:\Users\jerem\Projects\forgepublicsafety-website
+cd "C:\Users\jerem\OneDrive\Axis Public Safety RMS\forgepublicsafety-website"
 git init
 git add .
 git commit -m "Add Forge marketing site with Decap CMS"
@@ -57,7 +57,7 @@ Copy the **Client ID**. Generate a **Client secret** and save it somewhere safe.
 Firebase Functions need the **Blaze (pay-as-you-go)** plan because the OAuth handler calls GitHub’s API.
 
 ```powershell
-cd C:\Users\jerem\Projects\forgepublicsafety-website\functions
+cd "C:\Users\jerem\OneDrive\Axis Public Safety RMS\forgepublicsafety-website"\functions
 npm install
 cd ..
 firebase login
