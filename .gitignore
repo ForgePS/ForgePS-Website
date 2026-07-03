@@ -6,3 +6,7 @@ dist
 .env.*
 functions/.env
 
+# TinaCMS
+public/cms
+tina/__generated__/.cache
+

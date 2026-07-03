@@ -1,7 +1,7 @@
-import { content } from "../data/loadContent.js";
+import { useContent } from "../data/ContentContext.jsx";
 
 function LegalPage({ page }) {
-  const { legal } = content;
+  const { legal } = useContent();
 
   return (
     <div className="bg-black py-20">
@@ -22,13 +22,16 @@ function LegalPage({ page }) {
 }
 
 export function PrivacyPage() {
-  return <LegalPage page={content.legal.privacy} />;
+  const { legal } = useContent();
+  return <LegalPage page={legal.privacy} />;
 }
 
 export function TermsPage() {
-  return <LegalPage page={content.legal.terms} />;
+  const { legal } = useContent();
+  return <LegalPage page={legal.terms} />;
 }
 
 export function SecurityPage() {
-  return <LegalPage page={content.legal.security} />;
+  const { legal } = useContent();
+  return <LegalPage page={legal.security} />;
 }

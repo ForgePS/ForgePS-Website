@@ -1,7 +1,8 @@
 import CtaButton, { SectionHeading } from "../components/CtaButton.jsx";
-import { content } from "../data/loadContent.js";
+import { useContent } from "../data/ContentContext.jsx";
 
 export default function SolutionsPage() {
+  const content = useContent();
   const { solutions } = content;
 
   return (

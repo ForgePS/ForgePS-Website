@@ -1,12 +1,12 @@
 {
   "projects": {
-    "default": "rms-dashboard-7562e"
+    "default": "forge-website-b276c"
   },
   "targets": {
-    "rms-dashboard-7562e": {
+    "forge-website-b276c": {
       "hosting": {
         "marketing": [
-          "forgepublicsafety-com"
+          "forge-website-b276c"
         ]
       }
     }

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { content } from "../data/loadContent.js";
+import { useContent } from "../data/ContentContext.jsx";
 
 function ToggleGroup({ label, options, value, onChange }) {
   return (
@@ -26,6 +26,7 @@ function ToggleGroup({ label, options, value, onChange }) {
 }
 
 export default function DemoForm() {
+  const content = useContent();
   const { site } = content;
   const form = content.contact.form;
 

@@ -1,15 +1,24 @@
 # Edit your website (no AI required)
 
-## Option A — Browser editor (recommended)
+## Option A — Visual editor (recommended)
 
-Use **Decap CMS** at **`/admin`** on your live site.
+Use **TinaCMS** at **`/cms`**. You edit in a form on the left and the live page
+updates instantly on the right.
 
-1. Open **https://forgepublicsafety-com.web.app/admin** (or `/admin` on your domain after DNS cutover)
+**Locally:**
+
+1. Run `npm run dev:cms`
+2. Open **http://localhost:5173/cms/index.html** (the terminal prints the exact port)
+3. Click **Enter Edit Mode**, edit a field, then **Save** — changes write straight
+   to the `content/*.json` files
+
+**On the live site (after TinaCloud is connected):**
+
+1. Open **`/cms`** on your live site
 2. Log in with GitHub
-3. Pick a page from the sidebar, edit, click **Publish**
-4. The site redeploys automatically (via GitHub Actions)
+3. Edit, then **Save** — the change is committed and the site redeploys
 
-**First-time setup:** see **`DECAP-CMS-SETUP.md`**
+**First-time production setup:** see **`TINACMS-SETUP.md`**
 
 ---
 
@@ -47,7 +56,7 @@ Replace files in **`public/assets/`** (keep the same filename):
 - `forge-logo.png` — header/footer logo
 - `hero-firefighter.png` — homepage hero background
 
-Uploaded images from Decap CMS go to **`public/assets/uploads/`**.
+Uploaded images from the CMS go to **`public/assets/uploads/`**.
 
 ---
 
@@ -62,8 +71,9 @@ Old `/pricing` links redirect to Contact automatically.
 | Path | What it is |
 |------|------------|
 | `content/*.json` | Editable copy |
-| `public/admin/` | Decap CMS editor |
+| `tina/config.ts` | CMS schema (fields shown in the editor) |
+| `public/cms/` | Built TinaCMS editor (generated) |
 | `public/assets/` | Logo and images |
 | `preview.bat` | Local preview |
 | `publish.bat` | Manual deploy |
-| `DECAP-CMS-SETUP.md` | One-time CMS setup guide |
+| `TINACMS-SETUP.md` | One-time production CMS setup guide |

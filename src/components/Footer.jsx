@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
-import { content } from "../data/loadContent.js";
+import { useContent } from "../data/ContentContext.jsx";
 
 export default function Footer() {
+  const content = useContent();
   return (
     <footer className="border-t border-[#1E293B] bg-black">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
@@ -11,7 +12,9 @@ export default function Footer() {
             <p className="text-sm text-[#94A3B8] leading-relaxed">{content.site.footerBlurb}</p>
           </div>
 
-          {Object.entries(content.footerColumns).map(([title, links]) => (
+          {Object.entries(content.footerColumns)
+            .filter(([, links]) => Array.isArray(links))
+            .map(([title, links]) => (
             <div key={title}>
               <h4 className="text-sm font-bold uppercase tracking-wider text-white mb-4">{title}</h4>
               <ul className="space-y-2">

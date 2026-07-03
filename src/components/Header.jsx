@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
-import { content } from "../data/loadContent.js";
+import { useContent } from "../data/ContentContext.jsx";
 
 export default function Header() {
+  const content = useContent();
   const { navigation } = content;
 
   return (

@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import CtaButton from "../components/CtaButton.jsx";
-import { content } from "../data/loadContent.js";
+import { useContent } from "../data/ContentContext.jsx";
 
 export default function NotFoundPage() {
+  const content = useContent();
   const { notFound } = content;
 
   return (

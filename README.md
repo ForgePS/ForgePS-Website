@@ -32,7 +32,7 @@ npm run build
 firebase deploy --only hosting:marketing
 ```
 
-Until DNS is switched, preview the site at **https://forgepublicsafety-com.web.app** and the CMS at **https://forgepublicsafety-com.web.app/admin**.
+Until DNS is switched, preview the site at **https://forgepublicsafety-com.web.app** and the CMS at **https://forgepublicsafety-com.web.app/cms**.
 
 ### Point forgepublicsafety.com to Firebase
 
@@ -43,15 +43,17 @@ The marketing site is deployed to Firebase site **`forgepublicsafety-com`** (not
 3. Add the DNS records Firebase shows (usually A records + TXT for verification)
 4. Wait for SSL (can take up to 24 hours)
 
-Until DNS switches, use **https://forgepublicsafety-com.web.app** and **https://forgepublicsafety-com.web.app/admin**.
+Until DNS switches, use **https://forgepublicsafety-com.web.app** and **https://forgepublicsafety-com.web.app/cms**.
 
 ## Demo form
 
 The contact form opens a `mailto:demo@forgepublicsafety.com` message. Replace with Formspree, Firebase Functions, or another form backend when ready.
 
-## Content editor (Decap CMS)
+## Content editor (TinaCMS)
 
-Browser-based editing at **`/admin`**. See **`DECAP-CMS-SETUP.md`** for one-time GitHub + OAuth setup, then **`EDITING.md`** for day-to-day use.
+Visual, on-page editing at **`/cms`**. Run `npm run dev:cms` for local editing (no
+login needed). See **`TINACMS-SETUP.md`** for one-time TinaCloud setup to enable
+editing on the live site, then **`EDITING.md`** for day-to-day use.
 
 ## Assets
 

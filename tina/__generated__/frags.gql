@@ -1,0 +1,279 @@
+fragment GlobalParts on Global {
+  __typename
+  site {
+    __typename
+    name
+    tagline
+    footerBlurb
+    demoEmail
+    privacyEmail
+    securityEmail
+    rmsUrl
+    pricingNote
+  }
+  navigation {
+    __typename
+    main {
+      __typename
+      label
+      href
+    }
+    ctaLabel
+  }
+  ui {
+    __typename
+    learnMoreLabel
+    requestDemoLabel
+    exploreRmsLabel
+    moduleTagLabel
+    exploreProductPrefix
+    openLivePlatformLabel
+  }
+}
+
+fragment HomeParts on Home {
+  __typename
+  home {
+    __typename
+    heroEyebrow
+    heroTitle
+    heroLead
+    heroBody
+    heroBullets
+    modulesEyebrow
+    modulesTitle
+    modulesDescription
+    productsEyebrow
+    productsTitle
+    productsDescription
+    whyEyebrow
+    whyTitle
+    whyDescription
+    whyCards {
+      __typename
+      title
+      copy
+    }
+    closingTitle
+    closingDescription
+  }
+}
+
+fragment ProductsPageParts on ProductsPage {
+  __typename
+  products {
+    __typename
+    heroEyebrow
+    heroTitle
+    heroDescription
+    heroSecondaryLink
+    baseEyebrow
+    baseTitle
+    baseDescription
+    addonsEyebrow
+    addonsTitle
+    addonsDescription
+    coreTitle
+    coreDescription
+  }
+  basePackageFeatures
+}
+
+fragment ProductModulesParts on ProductModules {
+  __typename
+  productModules {
+    __typename
+    id
+    name
+    subtitle
+    description
+    liveLink
+  }
+}
+
+fragment AddonModulesParts on AddonModules {
+  __typename
+  addOnModules {
+    __typename
+    name
+    subtitle
+    description
+  }
+}
+
+fragment SolutionsParts on Solutions {
+  __typename
+  solutions {
+    __typename
+    eyebrow
+    title
+    description
+    items {
+      __typename
+      title
+      copy
+    }
+    closingTitle
+    closingDescription
+  }
+}
+
+fragment CompanyParts on Company {
+  __typename
+  company {
+    __typename
+    eyebrow
+    title
+    description
+    paragraphs
+    closingTitle
+    closingDescription
+  }
+}
+
+fragment ContactParts on Contact {
+  __typename
+  contact {
+    __typename
+    eyebrow
+    title
+    description
+    sidebarTitle
+    sidebarBody
+    quote
+    form {
+      __typename
+      infoHeading
+      fields {
+        __typename
+        name
+        label
+        placeholder
+        required
+      }
+      agencyHeading
+      agencyTypeLabel
+      agencyTypes
+      agencySizeLabel
+      agencySizes
+      productLabel
+      productOptions
+      notesLabel
+      notesPlaceholder
+      submitLabel
+      successTitle
+      successBody
+    }
+  }
+}
+
+fragment ResourcesParts on Resources {
+  __typename
+  resources {
+    __typename
+    eyebrow
+    title
+    description
+    cards {
+      __typename
+      title
+      copy
+      linkLabel
+      linkHref
+      external
+    }
+  }
+}
+
+fragment FooterParts on Footer {
+  __typename
+  footerColumns {
+    __typename
+    Solutions {
+      __typename
+      label
+      href
+    }
+    Products {
+      __typename
+      label
+      href
+    }
+    Resources {
+      __typename
+      label
+      href
+    }
+    Company {
+      __typename
+      label
+      href
+    }
+  }
+  footerLegal {
+    __typename
+    links {
+      __typename
+      label
+      href
+    }
+    copyrightSuffix
+  }
+}
+
+fragment LegalParts on Legal {
+  __typename
+  legal {
+    __typename
+    lastUpdatedLabel
+    lastUpdated
+    privacy {
+      __typename
+      title
+      sections {
+        __typename
+        heading
+        body
+      }
+    }
+    terms {
+      __typename
+      title
+      sections {
+        __typename
+        heading
+        body
+      }
+    }
+    security {
+      __typename
+      title
+      sections {
+        __typename
+        heading
+        body
+      }
+    }
+  }
+}
+
+fragment NotfoundParts on Notfound {
+  __typename
+  notFound {
+    __typename
+    eyebrow
+    title
+    body
+    homeLabel
+    contactLabel
+  }
+}
+
+fragment MediaParts on Media {
+  __typename
+  images {
+    __typename
+    logo
+    hero
+  }
+}
