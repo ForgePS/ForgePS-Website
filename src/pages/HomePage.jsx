@@ -4,13 +4,13 @@ import CtaButton, { SectionHeading } from "../components/CtaButton.jsx";
 import { content, productHref } from "../data/loadContent.js";
 
 export default function HomePage() {
-  const { home, site } = content;
+  const { home, site, ui } = content;
 
   return (
     <>
       <section className="relative overflow-hidden bg-[#0B1220]">
         <div className="absolute inset-0">
-          <img src="/assets/hero-firefighter.png" alt="" className="h-full w-full object-cover object-center opacity-90" />
+          <img src={content.images.hero} alt="" className="h-full w-full object-cover object-center opacity-90" />
           <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-black/20" />
         </div>
 
@@ -23,7 +23,7 @@ export default function HomePage() {
             <div className="flex flex-wrap gap-4">
               <CtaButton to="/contact">{content.navigation.ctaLabel}</CtaButton>
               <Link to="/products" className="inline-flex items-center gap-2 rounded-full border border-white/15 px-6 py-3 text-sm font-bold text-white hover:bg-white/5 transition-colors">
-                Learn More
+                {ui.learnMoreLabel}
                 <ArrowUpRight size={16} />
               </Link>
             </div>
@@ -40,7 +40,7 @@ export default function HomePage() {
           <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {content.addOnModules.map((module) => (
               <article key={module.name} className="rounded-[32px] border border-[#1E293B] bg-[#111827] p-8 hover:-translate-y-1 transition-transform">
-                <p className="text-xs uppercase tracking-wider text-[#475569] mb-2">Module</p>
+                <p className="text-xs uppercase tracking-wider text-[#475569] mb-2">{ui.moduleTagLabel}</p>
                 <h3 className="text-2xl font-bold text-white mb-2">{module.name}</h3>
                 <p className="text-sm font-medium text-[#F97316] mb-3">{module.subtitle}</p>
                 <p className="text-[#94A3B8] leading-relaxed">{module.description}</p>
@@ -61,7 +61,7 @@ export default function HomePage() {
                 <p className="text-[#94A3B8] leading-relaxed mb-6">{product.description}</p>
                 {productHref(product) ? (
                   <a href={productHref(product)} className="inline-flex items-center gap-2 text-sm font-bold text-white hover:text-[#F97316]" target="_blank" rel="noreferrer">
-                    Explore {product.name}
+                    {ui.exploreProductPrefix} {product.name}
                     <ArrowUpRight size={14} />
                   </a>
                 ) : (
@@ -94,8 +94,8 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
           <SectionHeading align="center" title={home.closingTitle} description={home.closingDescription} />
           <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <CtaButton to="/contact">Request a Demo</CtaButton>
-            <CtaButton to={site.rmsUrl} external>Explore Forge RMS</CtaButton>
+            <CtaButton to="/contact">{ui.requestDemoLabel}</CtaButton>
+            <CtaButton to={site.rmsUrl} external>{ui.exploreRmsLabel}</CtaButton>
           </div>
           <p className="mt-8 text-sm text-[#64748B]">{site.pricingNote}</p>
         </div>

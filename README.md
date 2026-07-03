@@ -12,7 +12,7 @@ Standalone marketing website for **forgepublicsafety.com**, rebuilt outside GoDa
 ## Local development
 
 ```powershell
-cd C:\Users\jerem\Projects\forgepublicsafety-website
+cd "C:\Users\jerem\OneDrive\Forge Public Safety\forgepublicsafety-website"
 npm install
 npm run dev
 ```

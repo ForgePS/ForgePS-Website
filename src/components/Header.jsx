@@ -11,7 +11,7 @@ export default function Header() {
         <div className="flex h-28 items-center justify-between gap-6">
           <Link to="/" className="flex items-center shrink-0" aria-label={`${content.site.name} — Home`}>
             <img
-              src="/assets/forge-logo.png"
+              src={content.images.logo}
               alt={`Forge — ${content.site.tagline}`}
               className="h-20 md:h-24 w-auto object-contain"
             />

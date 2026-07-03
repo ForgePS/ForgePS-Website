@@ -4,7 +4,7 @@ import CtaButton, { SectionHeading } from "../components/CtaButton.jsx";
 import { content, productHref } from "../data/loadContent.js";
 
 export default function ProductsPage() {
-  const { products } = content;
+  const { products, ui } = content;
 
   return (
     <div className="bg-black">
@@ -58,7 +58,7 @@ export default function ProductsPage() {
                 <p className="text-[#94A3B8] leading-relaxed mb-6">{product.description}</p>
                 {productHref(product) ? (
                   <a href={productHref(product)} className="inline-flex items-center gap-2 text-sm font-bold text-white hover:text-[#F97316]" target="_blank" rel="noreferrer">
-                    Open live platform
+                    {ui.openLivePlatformLabel}
                     <ArrowUpRight size={14} />
                   </a>
                 ) : (
@@ -71,7 +71,7 @@ export default function ProductsPage() {
             ))}
           </div>
           <div className="mt-12 text-center">
-            <CtaButton to="/contact">Request a Demo</CtaButton>
+            <CtaButton to="/contact">{ui.requestDemoLabel}</CtaButton>
           </div>
         </div>
       </section>

@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: YOUR_GITHUB_USERNAME/forgepublicsafety-website
+  repo: ForgePS/ForgePS-Website
   branch: main
   base_url: https://us-central1-rms-dashboard-7562e.cloudfunctions.net/cmsOAuth
   auth_endpoint: auth
@@ -46,6 +46,16 @@ collections:
                   - { label: Label, name: label, widget: string }
                   - { label: Link path, name: href, widget: string, hint: "Example: /products" }
               - { label: Header button text, name: ctaLabel, widget: string }
+          - label: Shared button labels
+            name: ui
+            widget: object
+            fields:
+              - { label: "\"Learn More\" button", name: learnMoreLabel, widget: string }
+              - { label: "\"Request a Demo\" button", name: requestDemoLabel, widget: string }
+              - { label: "\"Explore Forge RMS\" button", name: exploreRmsLabel, widget: string }
+              - { label: Module tag label, name: moduleTagLabel, widget: string }
+              - { label: "Explore product prefix (e.g. \"Explore\")", name: exploreProductPrefix, widget: string }
+              - { label: "\"Open live platform\" link", name: openLivePlatformLabel, widget: string }
 
       - label: Homepage
         name: home
@@ -191,6 +201,40 @@ collections:
               - { label: Sidebar title, name: sidebarTitle, widget: string }
               - { label: Sidebar body, name: sidebarBody, widget: text }
               - { label: Testimonial quote, name: quote, widget: text }
+              - label: Demo request form
+                name: form
+                widget: object
+                fields:
+                  - { label: "\"Your information\" heading", name: infoHeading, widget: string }
+                  - label: Contact fields
+                    name: fields
+                    widget: list
+                    fields:
+                      - { label: Field key, name: name, widget: string, hint: "Internal key — leave 'email' for the email field. Avoid spaces." }
+                      - { label: Label, name: label, widget: string }
+                      - { label: Placeholder, name: placeholder, widget: string, required: false }
+                      - { label: Required, name: required, widget: boolean, default: false }
+                  - { label: "\"About your agency\" heading", name: agencyHeading, widget: string }
+                  - { label: Agency type label, name: agencyTypeLabel, widget: string }
+                  - label: Agency type options
+                    name: agencyTypes
+                    widget: list
+                    field: { label: Option, name: option, widget: string }
+                  - { label: Agency size label, name: agencySizeLabel, widget: string }
+                  - label: Agency size options
+                    name: agencySizes
+                    widget: list
+                    field: { label: Option, name: option, widget: string }
+                  - { label: Product interest label, name: productLabel, widget: string }
+                  - label: Product interest options
+                    name: productOptions
+                    widget: list
+                    field: { label: Option, name: option, widget: string }
+                  - { label: Notes label, name: notesLabel, widget: string }
+                  - { label: Notes placeholder, name: notesPlaceholder, widget: string }
+                  - { label: Submit button text, name: submitLabel, widget: string }
+                  - { label: Success title, name: successTitle, widget: string }
+                  - { label: "Success body (demo email appended automatically)", name: successBody, widget: text }
 
       - label: Resources page
         name: resources
@@ -247,6 +291,77 @@ collections:
                 fields:
                   - { label: Label, name: label, widget: string }
                   - { label: Link, name: href, widget: string }
+          - label: Footer legal bar
+            name: footerLegal
+            widget: object
+            fields:
+              - label: Legal links
+                name: links
+                widget: list
+                fields:
+                  - { label: Label, name: label, widget: string }
+                  - { label: Link, name: href, widget: string }
+              - { label: "Copyright suffix (after \"© year Name.\")", name: copyrightSuffix, widget: string }
+
+      - label: Legal pages
+        name: legal
+        file: content/legal.json
+        format: json
+        fields:
+          - label: Legal pages
+            name: legal
+            widget: object
+            fields:
+              - { label: "\"Last updated\" label", name: lastUpdatedLabel, widget: string }
+              - { label: Last updated date, name: lastUpdated, widget: string }
+              - label: Privacy Policy
+                name: privacy
+                widget: object
+                fields:
+                  - { label: Page title, name: title, widget: string }
+                  - label: Sections
+                    name: sections
+                    widget: list
+                    fields:
+                      - { label: Heading, name: heading, widget: string }
+                      - { label: Body, name: body, widget: text }
+              - label: Terms of Service
+                name: terms
+                widget: object
+                fields:
+                  - { label: Page title, name: title, widget: string }
+                  - label: Sections
+                    name: sections
+                    widget: list
+                    fields:
+                      - { label: Heading, name: heading, widget: string }
+                      - { label: Body, name: body, widget: text }
+              - label: Security
+                name: security
+                widget: object
+                fields:
+                  - { label: Page title, name: title, widget: string }
+                  - label: Sections
+                    name: sections
+                    widget: list
+                    fields:
+                      - { label: Heading, name: heading, widget: string }
+                      - { label: Body, name: body, widget: text }
+
+      - label: 404 page
+        name: notfound
+        file: content/notfound.json
+        format: json
+        fields:
+          - label: 404 page
+            name: notFound
+            widget: object
+            fields:
+              - { label: Eyebrow, name: eyebrow, widget: string }
+              - { label: Title, name: title, widget: string }
+              - { label: Body, name: body, widget: text }
+              - { label: Home button text, name: homeLabel, widget: string }
+              - { label: Contact button text, name: contactLabel, widget: string }
 
   - name: media
     label: Images
@@ -256,4 +371,9 @@ collections:
         file: content/media.json
         format: json
         fields:
-          - { label: Note, name: note, widget: string, default: "Replace files in public/assets/ — forge-logo.png and hero-firefighter.png. Uploaded images go to public/assets/uploads/." }
+          - label: Images
+            name: images
+            widget: object
+            fields:
+              - { label: Header/footer logo, name: logo, widget: image, hint: "Recommended: transparent PNG. Upload a new file or keep the current one." }
+              - { label: Homepage hero background, name: hero, widget: image, hint: "Large landscape image used behind the homepage headline." }
