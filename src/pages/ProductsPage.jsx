@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
+import { tinaField } from "tinacms/dist/react";
 import CtaButton, { SectionHeading } from "../components/CtaButton.jsx";
 import { productHref } from "../data/loadContent.js";
 import { useContent } from "../data/ContentContext.jsx";
@@ -12,10 +13,15 @@ export default function ProductsPage() {
     <div className="bg-black">
       <section className="py-20 bg-[#0B1220] border-b border-[#1E293B]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <SectionHeading eyebrow={products.heroEyebrow} title={products.heroTitle} description={products.heroDescription} />
+          <SectionHeading
+            eyebrow={products.heroEyebrow}
+            title={products.heroTitle}
+            description={products.heroDescription}
+            tina={{ eyebrow: tinaField(products, "heroEyebrow"), title: tinaField(products, "heroTitle"), description: tinaField(products, "heroDescription") }}
+          />
           <div className="mt-8 flex flex-wrap gap-4">
             <CtaButton to="/contact">{content.navigation.ctaLabel}</CtaButton>
-            <Link to="/contact" className="inline-flex items-center gap-2 text-sm font-bold text-[#F97316]">
+            <Link to="/contact" className="inline-flex items-center gap-2 text-sm font-bold text-[#F97316]" data-tina-field={tinaField(products, "heroSecondaryLink")}>
               {products.heroSecondaryLink}
               <ArrowUpRight size={14} />
             </Link>
@@ -25,7 +31,12 @@ export default function ProductsPage() {
 
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <SectionHeading eyebrow={products.baseEyebrow} title={products.baseTitle} description={products.baseDescription} />
+          <SectionHeading
+            eyebrow={products.baseEyebrow}
+            title={products.baseTitle}
+            description={products.baseDescription}
+            tina={{ eyebrow: tinaField(products, "baseEyebrow"), title: tinaField(products, "baseTitle"), description: tinaField(products, "baseDescription") }}
+          />
           <ul className="mt-10 grid gap-4 md:grid-cols-2">
             {content.basePackageFeatures.map((feature) => (
               <li key={feature} className="rounded-2xl border border-[#1E293B] bg-[#111827] px-5 py-4 text-[#CBD5E1]">{feature}</li>
@@ -36,13 +47,18 @@ export default function ProductsPage() {
 
       <section className="py-20 bg-[#0B1220]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <SectionHeading eyebrow={products.addonsEyebrow} title={products.addonsTitle} description={products.addonsDescription} />
+          <SectionHeading
+            eyebrow={products.addonsEyebrow}
+            title={products.addonsTitle}
+            description={products.addonsDescription}
+            tina={{ eyebrow: tinaField(products, "addonsEyebrow"), title: tinaField(products, "addonsTitle"), description: tinaField(products, "addonsDescription") }}
+          />
           <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {content.addOnModules.map((module) => (
               <article key={module.name} className="rounded-[32px] border border-[#1E293B] bg-[#111827] p-8">
-                <h3 className="text-2xl font-bold text-white mb-2">{module.name}</h3>
-                <p className="text-sm font-medium text-[#F97316] mb-3">{module.subtitle}</p>
-                <p className="text-[#94A3B8] leading-relaxed">{module.description}</p>
+                <h3 className="text-2xl font-bold text-white mb-2" data-tina-field={tinaField(module, "name")}>{module.name}</h3>
+                <p className="text-sm font-medium text-[#F97316] mb-3" data-tina-field={tinaField(module, "subtitle")}>{module.subtitle}</p>
+                <p className="text-[#94A3B8] leading-relaxed" data-tina-field={tinaField(module, "description")}>{module.description}</p>
               </article>
             ))}
           </div>
@@ -51,13 +67,17 @@ export default function ProductsPage() {
 
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <SectionHeading title={products.coreTitle} description={products.coreDescription} />
+          <SectionHeading
+            title={products.coreTitle}
+            description={products.coreDescription}
+            tina={{ title: tinaField(products, "coreTitle"), description: tinaField(products, "coreDescription") }}
+          />
           <div className="mt-12 grid gap-6 md:grid-cols-2">
             {content.productModules.map((product) => (
               <article key={product.id} id={product.id} className="rounded-[32px] border border-[#1E293B] bg-[#111827] p-8">
-                <h3 className="text-2xl font-bold text-white mb-1">{product.name}</h3>
-                <p className="text-sm font-medium text-[#F97316] mb-3">{product.subtitle}</p>
-                <p className="text-[#94A3B8] leading-relaxed mb-6">{product.description}</p>
+                <h3 className="text-2xl font-bold text-white mb-1" data-tina-field={tinaField(product, "name")}>{product.name}</h3>
+                <p className="text-sm font-medium text-[#F97316] mb-3" data-tina-field={tinaField(product, "subtitle")}>{product.subtitle}</p>
+                <p className="text-[#94A3B8] leading-relaxed mb-6" data-tina-field={tinaField(product, "description")}>{product.description}</p>
                 {productHref(product) ? (
                   <a href={productHref(product)} className="inline-flex items-center gap-2 text-sm font-bold text-white hover:text-[#F97316]" target="_blank" rel="noreferrer">
                     {ui.openLivePlatformLabel}

@@ -1,3 +1,4 @@
+import { tinaField } from "tinacms/dist/react";
 import { useContent } from "../data/ContentContext.jsx";
 
 function LegalPage({ page }) {
@@ -6,13 +7,13 @@ function LegalPage({ page }) {
   return (
     <div className="bg-black py-20">
       <div className="max-w-3xl mx-auto px-6 lg:px-8">
-        <h1 className="text-4xl font-black text-white mb-2">{page.title}</h1>
+        <h1 className="text-4xl font-black text-white mb-2" data-tina-field={tinaField(page, "title")}>{page.title}</h1>
         <p className="text-sm text-[#64748B] mb-10">{legal.lastUpdatedLabel} {legal.lastUpdated}</p>
         <div className="space-y-8 text-[#94A3B8] leading-relaxed">
           {page.sections.map((section) => (
             <section key={section.heading}>
-              <h2 className="text-2xl font-bold text-white mb-3">{section.heading}</h2>
-              <p>{section.body}</p>
+              <h2 className="text-2xl font-bold text-white mb-3" data-tina-field={tinaField(section, "heading")}>{section.heading}</h2>
+              <p data-tina-field={tinaField(section, "body")}>{section.body}</p>
             </section>
           ))}
         </div>

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { tinaField } from "tinacms/dist/react";
 import CtaButton from "../components/CtaButton.jsx";
 import { useContent } from "../data/ContentContext.jsx";
 
@@ -9,9 +10,9 @@ export default function NotFoundPage() {
   return (
     <section className="py-32 bg-black">
       <div className="max-w-3xl mx-auto px-6 lg:px-8 text-center">
-        <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[#F97316] mb-4">{notFound.eyebrow}</p>
-        <h1 className="text-5xl font-black text-white mb-4">{notFound.title}</h1>
-        <p className="text-lg text-[#94A3B8] mb-8">
+        <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[#F97316] mb-4" data-tina-field={tinaField(notFound, "eyebrow")}>{notFound.eyebrow}</p>
+        <h1 className="text-5xl font-black text-white mb-4" data-tina-field={tinaField(notFound, "title")}>{notFound.title}</h1>
+        <p className="text-lg text-[#94A3B8] mb-8" data-tina-field={tinaField(notFound, "body")}>
           {notFound.body}
         </p>
         <div className="flex flex-wrap justify-center gap-4">

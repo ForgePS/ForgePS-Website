@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { tinaField } from "tinacms/dist/react";
 import { useContent } from "../data/ContentContext.jsx";
 
 export default function Footer() {
@@ -9,7 +10,7 @@ export default function Footer() {
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-5">
           <div className="lg:col-span-1">
             <img src={content.images.logo} alt={content.site.name} className="h-16 w-auto mb-4" />
-            <p className="text-sm text-[#94A3B8] leading-relaxed">{content.site.footerBlurb}</p>
+            <p className="text-sm text-[#94A3B8] leading-relaxed" data-tina-field={tinaField(content.site, "footerBlurb")}>{content.site.footerBlurb}</p>
           </div>
 
           {Object.entries(content.footerColumns)
@@ -20,7 +21,7 @@ export default function Footer() {
               <ul className="space-y-2">
                 {links.map((link) => (
                   <li key={link.label}>
-                    <Link to={link.href} className="text-sm text-[#94A3B8] hover:text-white transition-colors">
+                    <Link to={link.href} className="text-sm text-[#94A3B8] hover:text-white transition-colors" data-tina-field={tinaField(link, "label")}>
                       {link.label}
                     </Link>
                   </li>
@@ -34,7 +35,7 @@ export default function Footer() {
           <p>© {new Date().getFullYear()} {content.site.name}. {content.footerLegal.copyrightSuffix}</p>
           <div className="flex flex-wrap gap-4">
             {content.footerLegal.links.map((link) => (
-              <Link key={link.href} to={link.href} className="hover:text-white">{link.label}</Link>
+              <Link key={link.href} to={link.href} className="hover:text-white" data-tina-field={tinaField(link, "label")}>{link.label}</Link>
             ))}
           </div>
         </div>

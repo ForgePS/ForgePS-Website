@@ -3,11 +3,14 @@
     "target": "marketing",
     "public": "dist",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
-    "rewrites": [
+    "redirects": [
       {
         "source": "/cms",
-        "destination": "/cms/index.html"
-      },
+        "destination": "/cms/index.html#/~",
+        "type": 302
+      }
+    ],
+    "rewrites": [
       {
         "source": "**",
         "destination": "/index.html"

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
+import { tinaField } from "tinacms/dist/react";
 import { useContent } from "../data/ContentContext.jsx";
 
 export default function Header() {
@@ -24,6 +25,7 @@ export default function Header() {
                 key={item.href}
                 to={item.href}
                 className="text-base font-bold tracking-wide text-[#94A3B8] hover:text-white transition-colors"
+                data-tina-field={tinaField(item, "label")}
               >
                 {item.label}
               </Link>
@@ -33,6 +35,7 @@ export default function Header() {
           <Link
             to="/contact"
             className="inline-flex items-center gap-2 rounded-full bg-[#F97316] px-5 py-2.5 text-sm font-bold text-white hover:bg-[#ea580c] transition-colors"
+            data-tina-field={tinaField(navigation, "ctaLabel")}
           >
             {navigation.ctaLabel}
             <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/15">

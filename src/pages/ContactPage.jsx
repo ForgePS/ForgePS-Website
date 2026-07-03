@@ -1,3 +1,4 @@
+import { tinaField } from "tinacms/dist/react";
 import DemoForm from "../components/DemoForm.jsx";
 import { useContent } from "../data/ContentContext.jsx";
 
@@ -9,9 +10,9 @@ export default function ContactPage() {
     <div className="bg-black">
       <section className="py-20 bg-[#0B1220] border-b border-[#1E293B]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[#F97316] mb-4">{contact.eyebrow}</p>
-          <h1 className="text-5xl md:text-6xl font-black tracking-tight text-white mb-4">{contact.title}</h1>
-          <p className="max-w-2xl text-lg text-[#94A3B8] leading-relaxed">{contact.description}</p>
+          <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[#F97316] mb-4" data-tina-field={tinaField(contact, "eyebrow")}>{contact.eyebrow}</p>
+          <h1 className="text-5xl md:text-6xl font-black tracking-tight text-white mb-4" data-tina-field={tinaField(contact, "title")}>{contact.title}</h1>
+          <p className="max-w-2xl text-lg text-[#94A3B8] leading-relaxed" data-tina-field={tinaField(contact, "description")}>{contact.description}</p>
         </div>
       </section>
 
@@ -20,11 +21,11 @@ export default function ContactPage() {
           <DemoForm />
           <aside className="space-y-6">
             <div className="rounded-[32px] border border-[#1E293B] bg-[#111827] p-8">
-              <h2 className="text-xl font-bold text-white mb-4">{contact.sidebarTitle}</h2>
-              <p className="text-[#94A3B8] mb-4">{contact.sidebarBody}</p>
-              <p className="text-white font-medium">{site.demoEmail}</p>
+              <h2 className="text-xl font-bold text-white mb-4" data-tina-field={tinaField(contact, "sidebarTitle")}>{contact.sidebarTitle}</h2>
+              <p className="text-[#94A3B8] mb-4" data-tina-field={tinaField(contact, "sidebarBody")}>{contact.sidebarBody}</p>
+              <p className="text-white font-medium" data-tina-field={tinaField(site, "demoEmail")}>{site.demoEmail}</p>
             </div>
-            <blockquote className="rounded-[32px] border border-[#1E293B] bg-[#111827] p-8 text-[#CBD5E1] italic">
+            <blockquote className="rounded-[32px] border border-[#1E293B] bg-[#111827] p-8 text-[#CBD5E1] italic" data-tina-field={tinaField(contact, "quote")}>
               "{contact.quote}"
             </blockquote>
           </aside>

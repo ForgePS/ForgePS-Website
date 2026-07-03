@@ -8,9 +8,10 @@ updates instantly on the right.
 **Locally:**
 
 1. Run `npm run dev:cms`
-2. Open **http://localhost:5173/cms/index.html** (the terminal prints the exact port)
-3. Click **Enter Edit Mode**, edit a field, then **Save** — changes write straight
-   to the `content/*.json` files
+2. Open **http://localhost:5173/cms/index.html#/~** (the terminal prints the exact
+   port; the `#/~` opens the side-by-side visual editor)
+3. Edit a field on the left and watch the live page update on the right, then **Save**
+   — changes write straight to the `content/*.json` files
 
 **On the live site (after TinaCloud is connected):**
 

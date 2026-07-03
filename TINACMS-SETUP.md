@@ -9,9 +9,11 @@ The site uses **TinaCMS** for visual, on-page content editing. Content lives in
 npm run dev:cms
 ```
 
-Open the printed URL + `/cms/index.html` (e.g. **http://localhost:5173/cms/index.html**),
-click **Enter Edit Mode**, edit, and **Save**. Changes write directly to the
-`content/*.json` files on disk.
+Open the printed URL + `/cms/index.html#/~` (e.g.
+**http://localhost:5173/cms/index.html#/~**) for the side-by-side visual editor.
+Edit on the left, watch the live page update on the right, and **Save**. Changes
+write directly to the `content/*.json` files on disk. On the deployed site, `/cms`
+redirects here automatically.
 
 ## Enable editing on the live site (one-time)
 

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout.jsx";
 import HomePage from "./pages/HomePage.jsx";
@@ -9,9 +10,18 @@ import ResourcesPage from "./pages/ResourcesPage.jsx";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
 import { PrivacyPage, SecurityPage, TermsPage } from "./pages/LegalPages.jsx";
 
+function CmsRedirect() {
+  useEffect(() => {
+    window.location.replace("/cms/index.html#/~");
+  }, []);
+  return null;
+}
+
 export default function App() {
   return (
     <Routes>
+      <Route path="/cms" element={<CmsRedirect />} />
+      <Route path="/admin" element={<CmsRedirect />} />
       <Route element={<Layout />}>
         <Route index element={<HomePage />} />
         <Route path="products" element={<ProductsPage />} />
