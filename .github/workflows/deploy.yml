@@ -38,10 +38,6 @@ jobs:
           TINA_BRANCH: main
 
       - name: Deploy to Firebase Hosting
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-          projectId: forge-website-b276c
-          target: marketing
-          channelId: live
+        run: npx -y firebase-tools@latest deploy --only hosting:marketing --project forge-website-b276c --non-interactive
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
