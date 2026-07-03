@@ -31,11 +31,16 @@ jobs:
         run: npm ci
 
       - name: Build site + Tina admin
-        run: npm run build:cms
+        # Trim any stray whitespace/newlines from the pasted secrets — a trailing
+        # newline in TINA_CLIENT_ID otherwise breaks the generated client URL.
+        run: |
+          export TINA_CLIENT_ID="$(printf '%s' "$TINA_CLIENT_ID_RAW" | tr -d '[:space:]')"
+          export TINA_TOKEN="$(printf '%s' "$TINA_TOKEN_RAW" | tr -d '[:space:]')"
+          export TINA_BRANCH="main"
+          npm run build:cms
         env:
-          TINA_CLIENT_ID: ${{ secrets.TINA_CLIENT_ID }}
-          TINA_TOKEN: ${{ secrets.TINA_TOKEN }}
-          TINA_BRANCH: main
+          TINA_CLIENT_ID_RAW: ${{ secrets.TINA_CLIENT_ID }}
+          TINA_TOKEN_RAW: ${{ secrets.TINA_TOKEN }}
 
       - name: Deploy to Firebase Hosting
         run: npx -y firebase-tools@latest deploy --only hosting:marketing --project forge-website-b276c --non-interactive
