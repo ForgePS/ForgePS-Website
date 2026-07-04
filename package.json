@@ -7,7 +7,7 @@
     "dev": "vite",
     "dev:cms": "tinacms dev -c \"vite\"",
     "build": "vite build",
-    "build:cms": "tinacms build --no-client-build-cache && vite build",
+    "build:cms": "tinacms build --no-client-build-cache --skip-cloud-checks && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
