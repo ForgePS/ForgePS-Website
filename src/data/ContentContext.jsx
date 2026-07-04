@@ -8,6 +8,7 @@ const ContentContext = createContext(staticContent);
 export const useContent = () => useContext(ContentContext);
 
 const DOCS = [
+  ["theme", "theme.json"],
   ["global", "global.json"],
   ["home", "home.json"],
   ["productsPage", "products-page.json"],
@@ -49,11 +50,13 @@ export function TinaContentProvider({ children }) {
     if (!edit) return undefined;
     let active = true;
     Promise.all(
-      DOCS.map(([q, relativePath]) =>
-        client.queries[q]({ relativePath })
+      DOCS.map(([q, relativePath]) => {
+        const run = client.queries[q];
+        if (typeof run !== "function") return Promise.resolve([q, null]);
+        return run({ relativePath })
           .then((r) => [q, r])
-          .catch(() => [q, null])
-      )
+          .catch(() => [q, null]);
+      })
     ).then((entries) => {
       if (active) setRes(Object.fromEntries(entries.filter(([, r]) => r)));
     });
@@ -62,6 +65,7 @@ export function TinaContentProvider({ children }) {
     };
   }, [edit]);
 
+  const themeT = useTina({ query: res.theme?.query, variables: res.theme?.variables, data: res.theme?.data });
   const globalT = useTina({ query: res.global?.query, variables: res.global?.variables, data: res.global?.data });
   const homeT = useTina({ query: res.home?.query, variables: res.home?.variables, data: res.home?.data });
   const productsPageT = useTina({ query: res.productsPage?.query, variables: res.productsPage?.variables, data: res.productsPage?.data });
@@ -79,6 +83,8 @@ export function TinaContentProvider({ children }) {
   const value = useMemo(() => {
     const merged = { ...staticContent };
 
+    const th = clean(themeT.data?.theme);
+    if (th?.theme) merged.theme = th.theme;
     const g = clean(globalT.data?.global);
     if (g) {
       if (g.site) merged.site = g.site;
@@ -118,6 +124,7 @@ export function TinaContentProvider({ children }) {
 
     return merged;
   }, [
+    themeT.data,
     globalT.data,
     homeT.data,
     productsPageT.data,

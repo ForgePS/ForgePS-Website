@@ -30,6 +30,48 @@ const bool = (name: string, label: string) => ({
 
 const singleton = { allowedActions: { create: false, delete: false } };
 
+// Curated font choices (label = what editors see, value = key used at runtime).
+const FONT_OPTIONS = [
+  { label: "System (default)", value: "system" },
+  { label: "Inter", value: "Inter" },
+  { label: "Poppins", value: "Poppins" },
+  { label: "Montserrat", value: "Montserrat" },
+  { label: "Roboto", value: "Roboto" },
+  { label: "Open Sans", value: "Open Sans" },
+  { label: "Lato", value: "Lato" },
+  { label: "Nunito", value: "Nunito" },
+  { label: "Raleway", value: "Raleway" },
+  { label: "Work Sans", value: "Work Sans" },
+  { label: "Oswald (condensed)", value: "Oswald" },
+  { label: "Bebas Neue (display)", value: "Bebas Neue" },
+  { label: "Playfair Display (serif)", value: "Playfair Display" },
+  { label: "Merriweather (serif)", value: "Merriweather" },
+  { label: "Roboto Slab (slab serif)", value: "Roboto Slab" },
+  { label: "Georgia (serif)", value: "Georgia" },
+];
+
+// A Tina string field rendered as a native color picker.
+const color = (name: string, label: string, description?: string) => ({
+  type: "string" as const,
+  name,
+  label,
+  ui: { component: "color" },
+  ...(description ? { description } : {}),
+});
+
+const select = (
+  name: string,
+  label: string,
+  options: { label: string; value: string }[],
+  description?: string
+) => ({
+  type: "string" as const,
+  name,
+  label,
+  options,
+  ...(description ? { description } : {}),
+});
+
 export default defineConfig({
   branch,
   // Filled in from TinaCloud for production; local dev ignores these.
@@ -101,6 +143,71 @@ export default defineConfig({
               str("moduleTagLabel", "Module tag label"),
               str("exploreProductPrefix", "Explore product prefix"),
               str("openLivePlatformLabel", "\"Open live platform\" link"),
+            ],
+          },
+        ],
+      },
+
+      // THEME / DESIGN -----------------------------------------------------
+      {
+        name: "theme",
+        label: "Design & styling",
+        path: "content",
+        format: "json",
+        match: { include: "theme" },
+        ui: singleton,
+        fields: [
+          {
+            type: "object",
+            name: "theme",
+            label: "Theme",
+            fields: [
+              {
+                type: "object",
+                name: "typography",
+                label: "Fonts & text",
+                fields: [
+                  select("headingFont", "Heading font", FONT_OPTIONS),
+                  select("bodyFont", "Body font", FONT_OPTIONS),
+                  select(
+                    "textScale",
+                    "Overall text size",
+                    [
+                      { label: "Small", value: "94%" },
+                      { label: "Normal", value: "100%" },
+                      { label: "Large", value: "108%" },
+                      { label: "Extra large", value: "116%" },
+                    ],
+                    "Scales all text on the site up or down proportionally."
+                  ),
+                  select("headingWeight", "Heading boldness", [
+                    { label: "Normal", value: "500" },
+                    { label: "Semi-bold", value: "600" },
+                    { label: "Bold", value: "700" },
+                    { label: "Extra bold", value: "800" },
+                    { label: "Black", value: "900" },
+                  ]),
+                  select("headingCase", "Heading letter case", [
+                    { label: "Normal", value: "none" },
+                    { label: "UPPERCASE", value: "uppercase" },
+                    { label: "Capitalize", value: "capitalize" },
+                  ]),
+                ],
+              },
+              {
+                type: "object",
+                name: "colors",
+                label: "Colors",
+                fields: [
+                  color("accent", "Accent / brand color", "Buttons, links, highlights (currently orange)."),
+                  color("background", "Page background"),
+                  color("text", "Main text color"),
+                  color("muted", "Muted / secondary text"),
+                  color("panel", "Card & panel background"),
+                  color("border", "Borders & dividers"),
+                  color("navy", "Deep navy accent"),
+                ],
+              },
             ],
           },
         ],

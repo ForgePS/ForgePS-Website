@@ -11,8 +11,10 @@ import footerData from "../../content/footer.json";
 import legalData from "../../content/legal.json";
 import notFoundData from "../../content/notfound.json";
 import mediaData from "../../content/media.json";
+import themeData from "../../content/theme.json";
 
 export const content = {
+  ...themeData,
   ...globalData,
   ...homeData,
   ...productsPageData,
