@@ -1,7 +1,7 @@
 {
   "hosting": {
     "site": "forge-website-b276c",
-    "public": "dist",
+    "public": "site",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
