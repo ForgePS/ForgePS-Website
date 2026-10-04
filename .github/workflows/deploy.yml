@@ -1,12 +1,14 @@
 name: Deploy to Firebase Hosting
 
-# Rebuilds the site + Tina admin and deploys to Firebase whenever content or
-# code lands on main. TinaCloud saves commit to main, so editor changes go live
-# automatically without anyone running a local build.
+# Publishes the Forge CMS site (cms-live/) to forge-website-b276c.
+# Saves and image uploads depend on the Storage and Firestore rules shipped
+# with that folder, so this deploy includes those rules.
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - cursor/fix-cms-save-uploads-5f1b
   workflow_dispatch:
 
 permissions:
@@ -22,27 +24,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build site + Tina admin
-        # Trim any stray whitespace/newlines from the pasted secrets — a trailing
-        # newline in TINA_CLIENT_ID otherwise breaks the generated client URL.
-        run: |
-          export TINA_CLIENT_ID="$(printf '%s' "$TINA_CLIENT_ID_RAW" | tr -d '[:space:]')"
-          export TINA_TOKEN="$(printf '%s' "$TINA_TOKEN_RAW" | tr -d '[:space:]')"
-          export TINA_BRANCH="main"
-          npm run build:cms
-        env:
-          TINA_CLIENT_ID_RAW: ${{ secrets.TINA_CLIENT_ID }}
-          TINA_TOKEN_RAW: ${{ secrets.TINA_TOKEN }}
-
-      - name: Deploy to Firebase Hosting
-        run: npx -y firebase-tools@latest deploy --only hosting:marketing --project forge-website-b276c --non-interactive
+      - name: Deploy hosting, Storage rules, and Firestore rules
+        working-directory: cms-live
+        run: npx -y firebase-tools@15.23.0 deploy --only hosting,storage,firestore:rules --project forge-website-b276c --non-interactive
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
