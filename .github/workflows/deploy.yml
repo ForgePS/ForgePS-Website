@@ -1,12 +1,14 @@
 name: Deploy to Firebase Hosting
 
-# Rebuilds the site + Tina admin and deploys to Firebase whenever content or
-# code lands on main. TinaCloud saves commit to main, so editor changes go live
-# automatically without anyone running a local build.
+# Publishes the Forge CMS site (cms-live/) to forge-website-b276c.
+# Saves and image uploads depend on the Storage and Firestore rules shipped
+# with that folder, so this deploy includes those rules.
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - cursor/fix-cms-save-uploads-5f1b
   workflow_dispatch:
 
 permissions:
@@ -22,27 +24,64 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build site + Tina admin
-        # Trim any stray whitespace/newlines from the pasted secrets — a trailing
-        # newline in TINA_CLIENT_ID otherwise breaks the generated client URL.
-        run: |
-          export TINA_CLIENT_ID="$(printf '%s' "$TINA_CLIENT_ID_RAW" | tr -d '[:space:]')"
-          export TINA_TOKEN="$(printf '%s' "$TINA_TOKEN_RAW" | tr -d '[:space:]')"
-          export TINA_BRANCH="main"
-          npm run build:cms
-        env:
-          TINA_CLIENT_ID_RAW: ${{ secrets.TINA_CLIENT_ID }}
-          TINA_TOKEN_RAW: ${{ secrets.TINA_TOKEN }}
-
-      - name: Deploy to Firebase Hosting
-        run: npx -y firebase-tools@latest deploy --only hosting:marketing --project forge-website-b276c --non-interactive
+      - name: Select Firebase credentials
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: |
+          if [ -n "$FIREBASE_SERVICE_ACCOUNT_JSON" ]; then
+            printf '%s' "$FIREBASE_SERVICE_ACCOUNT_JSON" > "$RUNNER_TEMP/firebase-sa.json"
+            echo "GOOGLE_APPLICATION_CREDENTIALS=$RUNNER_TEMP/firebase-sa.json" >> "$GITHUB_ENV"
+            echo "Using FIREBASE_SERVICE_ACCOUNT"
+            exit 0
+          fi
+          if [ -z "$FIREBASE_TOKEN" ]; then
+            echo "::error::Add FIREBASE_SERVICE_ACCOUNT (recommended) or FIREBASE_TOKEN in repository secrets."
+            exit 1
+          fi
+          set +e
+          python3 - <<'PY'
+          import json, os, sys, urllib.error, urllib.parse, urllib.request
+          token = os.environ["FIREBASE_TOKEN"].strip()
+          data = urllib.parse.urlencode({
+              "grant_type": "refresh_token",
+              "refresh_token": token,
+              "client_id": "563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com",
+              "client_secret": "j9iVZfS8kkCEFUPaAeJV0sAi",
+          }).encode()
+          req = urllib.request.Request("https://oauth2.googleapis.com/token", data=data)
+          try:
+              with urllib.request.urlopen(req, timeout=30) as res:
+                  body = json.loads(res.read().decode())
+          except urllib.error.HTTPError as err:
+              raw = err.read().decode("utf-8", "replace")
+              try:
+                  body = json.loads(raw)
+              except json.JSONDecodeError:
+                  body = {}
+              # Print only OAuth error fields. Never print the token or a new access token.
+              print("token_refresh=fail")
+              print("http_status=" + str(err.code))
+              print("error=" + str(body.get("error")))
+              print("error_subtype=" + str(body.get("error_subtype")))
+              sys.exit(2)
+          if not isinstance(body.get("access_token"), str):
+              print("token_refresh=fail")
+              print("error=missing_access_token")
+              sys.exit(2)
+          print("token_refresh=ok")
+          PY
+          status=$?
+          set -e
+          if [ "$status" -ne 0 ]; then
+            echo "::error::FIREBASE_TOKEN can no longer sign in (invalid_grant / invalid_rapt). On a computer that can open the Google login, run: npx firebase-tools login:ci. Replace the FIREBASE_TOKEN secret at https://github.com/ForgePS/ForgePS-Website/settings/secrets/actions with that token, then re-run this workflow. Service account keys are blocked for this project, so a new login token is the credential this deploy can use."
+            exit 1
+          fi
+          echo "FIREBASE_TOKEN=$FIREBASE_TOKEN" >> "$GITHUB_ENV"
+
+      - name: Deploy hosting, Storage rules, and Firestore rules
+        working-directory: cms-live
+        run: npx -y firebase-tools@15.22.4 deploy --only hosting,storage,firestore:rules --project forge-website-b276c --non-interactive
+        env:
+          FIREBASE_TOKEN: ${{ env.FIREBASE_TOKEN }}
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ env.GOOGLE_APPLICATION_CREDENTIALS }}
