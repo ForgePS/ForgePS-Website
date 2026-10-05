@@ -74,7 +74,7 @@ jobs:
           status=$?
           set -e
           if [ "$status" -ne 0 ]; then
-            echo "::error::FIREBASE_TOKEN can no longer sign in (invalid_grant / invalid_rapt). In Firebase Console → Project settings → Service accounts, create a key, then add the full JSON as the GitHub secret FIREBASE_SERVICE_ACCOUNT on ForgePS/ForgePS-Website and re-run this workflow."
+            echo "::error::FIREBASE_TOKEN can no longer sign in (invalid_grant / invalid_rapt). On a computer that can open the Google login, run: npx firebase-tools login:ci. Replace the FIREBASE_TOKEN secret at https://github.com/ForgePS/ForgePS-Website/settings/secrets/actions with that token, then re-run this workflow. Service account keys are blocked for this project, so a new login token is the credential this deploy can use."
             exit 1
           fi
           echo "FIREBASE_TOKEN=$FIREBASE_TOKEN" >> "$GITHUB_ENV"
