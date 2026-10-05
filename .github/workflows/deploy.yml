@@ -39,9 +39,9 @@ jobs:
             echo "::error::Add FIREBASE_SERVICE_ACCOUNT (recommended) or FIREBASE_TOKEN in repository secrets."
             exit 1
           fi
-          echo "FIREBASE_TOKEN=$FIREBASE_TOKEN" >> "$GITHUB_ENV"
+          set +e
           python3 - <<'PY'
-          import json, os, urllib.error, urllib.parse, urllib.request
+          import json, os, sys, urllib.error, urllib.parse, urllib.request
           token = os.environ["FIREBASE_TOKEN"].strip()
           data = urllib.parse.urlencode({
               "grant_type": "refresh_token",
@@ -53,7 +53,6 @@ jobs:
           try:
               with urllib.request.urlopen(req, timeout=30) as res:
                   body = json.loads(res.read().decode())
-              print("token_refresh=ok has_access_token=" + str(isinstance(body.get("access_token"), str)))
           except urllib.error.HTTPError as err:
               raw = err.read().decode("utf-8", "replace")
               try:
@@ -65,7 +64,20 @@ jobs:
               print("http_status=" + str(err.code))
               print("error=" + str(body.get("error")))
               print("error_subtype=" + str(body.get("error_subtype")))
+              sys.exit(2)
+          if not isinstance(body.get("access_token"), str):
+              print("token_refresh=fail")
+              print("error=missing_access_token")
+              sys.exit(2)
+          print("token_refresh=ok")
           PY
+          status=$?
+          set -e
+          if [ "$status" -ne 0 ]; then
+            echo "::error::FIREBASE_TOKEN can no longer sign in (invalid_grant / invalid_rapt). In Firebase Console → Project settings → Service accounts, create a key, then add the full JSON as the GitHub secret FIREBASE_SERVICE_ACCOUNT on ForgePS/ForgePS-Website and re-run this workflow."
+            exit 1
+          fi
+          echo "FIREBASE_TOKEN=$FIREBASE_TOKEN" >> "$GITHUB_ENV"
 
       - name: Deploy hosting, Storage rules, and Firestore rules
         working-directory: cms-live
