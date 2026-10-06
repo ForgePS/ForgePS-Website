@@ -9,6 +9,7 @@ on:
     branches:
       - main
       - cursor/fix-cms-save-uploads-5f1b
+      - cms-recovery
   workflow_dispatch:
 
 permissions:
